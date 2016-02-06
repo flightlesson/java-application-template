@@ -1,0 +1,13 @@
+I use this as a template when I start a new Java application.
+
+Obviously I rename lots of things:
+
+- "myapp" gets edited and renamed. Usually I just change the "myapp=myapp" line.
+- "pom.xml" get edited; project>groupId, project>artifactId, and
+  project>build>plugins>plugin>configuration>archive>manifest>mainClass need to be changed.
+- Under src/main, "com/demo/myapp" needs to be changed to your package and file MyApp.java
+  needs to be renamed and edited.
+
+Run "mvn package" and then "./myapp +h", "./myapp -h", "./myapp" to try it out.
+
+Enjoy!
