@@ -3,8 +3,6 @@ myapp=myapp
 myname=$(echo $0 | sed 's|.*/||')
 mydir=$(dirname $0 | sed 's|/$||')
 
-echo "myapp=$myapp, myname=$myname, mydir=$mydir"
-
 function usage() {
     cat <<- xxx
 	Usage: $myname [+h] [+v] [+noop] <application-args>
