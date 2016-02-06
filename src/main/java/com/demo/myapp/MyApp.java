@@ -45,6 +45,7 @@ public class MyApp implements Runnable {
         } catch (ParseException ex) {
             // can't use logger; it's not configured
             System.err.println(ex.getMessage());
+            (new HelpFormatter()).printHelp(USAGE,HEADER,OPTIONS,FOOTER,false);
         }
     }
     
