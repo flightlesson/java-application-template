@@ -15,7 +15,7 @@ import org.apache.log4j.xml.DOMConfigurator;
  * Overview of the application.
  */
 public class MyApp implements Runnable {
-    static Logger logger = Logger.getLogger("myapp");
+    static final Logger LOGGER = Logger.getLogger(MyApp.class.getName());
     
     static private final String USAGE = "stuff on usage line after 'usage:'";
     static private final String HEADER = "Brief summary of what the application does.\nOptions are:";
@@ -69,6 +69,6 @@ public class MyApp implements Runnable {
 
     @Override
     public void run() {
-	logger.info("running myapp, verbose="+verbose);
+	LOGGER.info("running myapp, verbose="+verbose);
     }
 }
