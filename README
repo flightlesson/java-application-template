@@ -1,13 +1,20 @@
-I use this as a template when I start a new Java application.
+This as a template for starting a new Java application.
 
-Obviously I rename lots of things:
+Customization starts by:
 
-- "myapp" gets edited and renamed. Usually I just change the "myapp=myapp" line.
-- "pom.xml" get edited; project>groupId, project>artifactId, and
-  project>build>plugins>plugin>configuration>archive>manifest>mainClass need to be changed.
-- Under src/main, "com/demo/myapp" needs to be changed to your package and file MyApp.java
-  needs to be renamed and edited.
+- Edit and rename the "myapp" script. Changing the "myapp=myapp" line is usually all that's needed.
+- Edit "pom.xml"; change project/groupId, project/artifactId, and */manifest/mainClass .
+- Under src/main, rename "com/demo/myapp" to your package and MyApp.java to your main class.
+- Edit the renamed "MyApp.java" and add your application code.
 
-Run "mvn package" and then "./myapp +h", "./myapp -h", "./myapp" to try it out.
+To build the application using maven run "mvn package". 
+Note that build artifacts get placed in "../maven-build-artifacts/myapp"
+instead of "target", which is maven's default: this is to avoid polluting 
+the project directory with build artifacts. See pom.xml to change this behavior.
+
+
+
+Use the renamed "myapp" script to start the application. 
+Try running with the "+h" command line arg, then with the "-h" command line arg.
 
 Enjoy!

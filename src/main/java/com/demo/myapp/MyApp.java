@@ -38,7 +38,7 @@ public class MyApp implements Runnable {
                 (new HelpFormatter()).printHelp(USAGE,HEADER,OPTIONS,FOOTER,false);
                 System.exit(1);
             }
-            configureLogger(cmdline.getOptionValue("l4jconfig","l4j.lcf"));
+            configureLog4j(cmdline.getOptionValue("l4jconfig","l4j.lcf"));
         
             MyApp myapp = new MyApp(cmdline.hasOption("verbose"));
             myapp.run();
@@ -49,7 +49,7 @@ public class MyApp implements Runnable {
         }
     }
     
-    static void configureLogger(String l4jconfig) {
+    static void configureLog4j(String l4jconfig) {
         if ((new File(l4jconfig)).canRead()) {
             if (l4jconfig.matches(".*\\.xml$")) {
                 DOMConfigurator.configureAndWatch(l4jconfig);

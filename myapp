@@ -25,7 +25,8 @@ function usage() {
 
 # The jarfile's name and location might be different during development and after installation;
 # this script should work unaltered either way.
-function findJarFile() for c in ./$myapp*.jar $mydir/$myapp*.jar target/$myapp-*-with-dependencies.jar; do
+function findJarFile() for c in ./$myapp*.jar ../maven-build-artifacts/$myapp/$myapp-*-with-dependencies.jar \
+                                target/$myapp-*-with-dependencies.jar $mydir/$myapp*.jar; do
                          [ -r $c ] && echo $c
                        done
 [ -z "$MYAPPJAR" ] && MYAPPJAR=$(findJarFile)
