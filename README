@@ -4,6 +4,7 @@ Customization starts by:
 
 - Edit and rename the "myapp" script. Changing the "myapp=myapp" line is usually all that's needed.
 - Edit "pom.xml"; change project/groupId, project/artifactId, and */manifest/mainClass .
+- Edit "Makefile"; change default values form MYAPP and JARFILE.
 - Under src/main, rename "com/demo/myapp" to your package and MyApp.java to your main class.
 - Edit the renamed "MyApp.java" and add your application code.
 
@@ -12,7 +13,9 @@ Note that build artifacts get placed in "../maven-build-artifacts/myapp"
 instead of "target", which is maven's default: this is to avoid polluting 
 the project directory with build artifacts. See pom.xml to change this behavior.
 
-
+To build the application using make, run "make all" or "make install". "make all"
+simply runs 'mvn package'; "make install" creates the ../sandbox directory and
+installs there. The sandbox can be useful in distributing your application.
 
 Use the renamed "myapp" script to start the application. 
 Try running with the "+h" command line arg, then with the "-h" command line arg.
