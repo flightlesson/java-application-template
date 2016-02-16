@@ -13,6 +13,7 @@ function usage() {
 	     help message use '-h'.
 	+v - print the java command before invocation.
 	+noop - don't actually invoke the java command.
+        +jar - print the path to the jar file and exit.
 
 	These environment variables are used to alter behavior:
 	JAVA - identifies the java command
@@ -40,6 +41,10 @@ while [ -n "$1" ]; do
     +v) verbose=verbose
 	;;
     +noop) noop=noop
+	;;
+    +jar)
+	echo $MYAPPJAR
+	exit 0
 	;;
     *)  break
 	;;
