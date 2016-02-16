@@ -1,7 +1,7 @@
-# This presumes GNU Make; it uses GNU Make syntax and extensions.
+# This uses GNU Make syntax and extensions.
 
 MYAPP=myapp
-JARFILE=../maven-build-artifacts/myapp/myapp-1.0-SNAPSHOT-jar-with-dependencies.jar
+JARFILE=../maven-build-artifacts/$(_MYAPP)/$(_MYAPP)-1.0-SNAPSHOT-jar-with-dependencies.jar
 SANDBOX=../sandbox
 
 .PHONY: usage
@@ -10,14 +10,21 @@ usage:
 	@echo "Targets include:"
 	@echo "  usage - [the default target] this message"
 	@echo "  all - assemble and compile, but do not install."
-	@echo "  install - install in \$$SANDBOX."
+	@echo "  install - installs \$$SANDBOX/bin/$(_MYAPP) and \$$SANDBOX/bin/$(_MYAPP).jar"
 	@echo "  clean - delete build artifacts."
 	@echo "Variables include:"
 	@echo "  SANDBOX - currently $(SANDBOX)"
-	@echo "  JARFILE - the jar that gets installed, currently $(JARFILE)"
+	@echo "  JARFILE - the jar that gets installed as \$$SANDBOX/bin/$(_MYAPP).jar,"
+	@echo "            currently $(JARFILE)"
+
+
+# Don't use variables directly; they might not be set
+override _SANDBOX = $(or $(SANDBOX),"SANDBOX") 
+override _MYAPP   = $(or $(MYAPP),"MYAPP")
+override _JARFILE = $(or $(JARFILE),"JARFILE")
 
 .PHONY: all
-all: $(JARFILE)
+all: $(_JARFILE)
 
 .PHONY: FORCE
 $(JARFILE): FORCE
@@ -28,13 +35,13 @@ clean:
 	mvn clean
 
 .PHONY: install
-install: $(SANDBOX)/bin $(SANDBOX)/bin/$(MYAPP) $(SANDBOX)/bin/$(MYAPP).jar
+install: $(_SANDBOX)/bin $(_SANDBOX)/bin/$(_MYAPP) $(_SANDBOX)/bin/$(_MYAPP).jar
 
-$(SANDBOX)/bin:
-	[ -d "$@" ] || mkdir -p $@ || false
+$(_SANDBOX)/bin:
+	[ -d "$@" ] || mkdir -p $@
 
-$(SANDBOX)/bin/$(MYAPP): $(MYAPP)
+$(_SANDBOX)/bin/$(MYAPP): $(_MYAPP)
 	cp $< $@
 
-$(SANDBOX)/bin/$(MYAPP).jar: $(JARFILE)
+$(_SANDBOX)/bin/$(MYAPP).jar: $(_JARFILE)
 	cp $< $@
