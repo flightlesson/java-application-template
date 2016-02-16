@@ -27,9 +27,9 @@ function usage() {
 # this script should work unaltered either way.
 function findJarFile() for c in ./$myapp*.jar ../maven-build-artifacts/$myapp/$myapp-*-with-dependencies.jar \
                                 target/$myapp-*-with-dependencies.jar $mydir/$myapp*.jar; do
-                         [ -r $c ] && echo $c
+                         [ -r $c ] && echo $c && return
                        done
-[ -z "$MYAPPJAR" ] && MYAPPJAR=$(findJarFile)
+[ -z "$MYAPPJAR" ] && MYAPPJAR=$(findJarFile || echo "did-not-find-the-jar-file")
 
 verbose=
 noop=
