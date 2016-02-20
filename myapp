@@ -40,7 +40,7 @@ while [ -n "$1" ]; do
 	;;
     +v) verbose=verbose
 	;;
-    +noop) noop=noop
+    +noop) noop=noop; verbose=noop
 	;;
     +jar)
 	echo $MYAPPJAR
@@ -52,11 +52,14 @@ while [ -n "$1" ]; do
   shift
 done
 
-if [ ! -r $MYAPPJAR ]; then
+if [ ! -r "$MYAPPJAR" ]; then
   echo "Couldn't find the jar file!"
   usage
 fi
 
-cmd="$JAVA -jar $MYAPPJAR $*"
+# Gotta do tricks to handle command line args that contain space chars.
+cmd="$JAVA -jar $MYAPPJAR"
+for x in "$@"; do cmd+=" \"$x\""; done
+
 [ -z "$verbose" ] || echo $cmd
-[ -z "$noop" ] && exec $cmd
+[ -z "$noop" ] && eval $cmd

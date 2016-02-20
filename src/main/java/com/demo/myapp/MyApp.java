@@ -44,8 +44,8 @@ public class MyApp implements Runnable {
             }
             configureLog4j(cmdline.getOptionValue("l4jconfig","l4j.lcf"));
         
-            MyApp myapp = new MyApp(cmdline.hasOption("verbose"));
-            myapp.run();
+            MyApp application = new MyApp(cmdline.hasOption("verbose"), cmdline.getArgs());
+            application.run();
         } catch (ParseException ex) {
             // can't use logger; it's not configured
             System.err.println(ex.getMessage());
@@ -66,13 +66,20 @@ public class MyApp implements Runnable {
     }
 
     private final boolean verbose;
+    private final String[] args;
     
-    public MyApp(boolean verbose) {
+    public MyApp(boolean verbose, String[] args) {
         this.verbose = verbose;
+        this.args = args;
     }
 
     @Override
     public void run() {
-	LOGGER.info("running myapp, verbose="+verbose);
+	LOGGER.info("running myapp");
+        LOGGER.info("... verbose is " + verbose);
+        LOGGER.info("... with " + args.length + " args");
+        for (int i=0; i < args.length; ++i) {
+            LOGGER.info("... arg["+i+"] is \""+args[i]+"\"");
+        }
     }
 }
