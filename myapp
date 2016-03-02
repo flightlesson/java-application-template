@@ -1,13 +1,14 @@
 #! /bin/bash
-myapp=myapp
 myname=$(echo $0 | sed 's|.*/||')
 mydir=$(dirname $0 | sed 's|/$||')
+jarfilebasename=myapp # jar file's name matches $jarfilebasename*.jar
+mainclass=com.demo.myapp.MyApp
 
 function usage() {
     cat <<- xxx
 	Usage: $myname [+h] [+v] [+noop] <application-args>
 
-	Runs the $myapp application.
+	Runs the $jarfilebasename application.
 
 	+h - print this message and stop. To see the application's
 	     help message use '-h'.
@@ -18,6 +19,7 @@ function usage() {
 	These environment variables are used to alter behavior:
 	JAVA - identifies the java command
 	MYAPPJAR - identifies the jar file
+	EXTRACLASSPATH - for example: extra1.jar:extra2.jar
 	xxx
     exit
 }
@@ -26,8 +28,8 @@ function usage() {
 
 # The jarfile's name and location might be different during development and after installation;
 # this script should work unaltered either way.
-function findJarFile() for c in ./$myapp*.jar ../maven-build-artifacts/$myapp/$myapp-*-with-dependencies.jar \
-                                target/$myapp-*-with-dependencies.jar $mydir/$myapp*.jar; do
+function findJarFile() for c in ./$jarfilebasename*.jar ../maven-build-artifacts/$jarfilebasename/$jarfilebasename-*-with-dependencies.jar \
+                                target/$jarfilebasename-*-with-dependencies.jar $mydir/$jarfilebasename*.jar; do
                          [ -r $c ] && echo $c && return
                        done
 [ -z "$MYAPPJAR" ] && MYAPPJAR=$(findJarFile || echo "did-not-find-the-jar-file")
@@ -36,18 +38,12 @@ verbose=
 noop=
 while [ -n "$1" ]; do
   case "$1" in
-    +h) usage
-	;;
-    +v) verbose=verbose
-	;;
-    +noop) noop=noop; verbose=noop
-	;;
-    +jar)
-	echo $MYAPPJAR
-	exit 0
-	;;
-    *)  break
-	;;
+    +h) usage ;;
+    +v) verbose=verbose ;;
+    +noop) noop=noop; verbose=noop ;;
+    +jar) echo $MYAPPJAR; exit 0 ;;
+    +main) mainclass=`shift`;;
+    *)  break ;;
   esac
   shift
 done
@@ -58,7 +54,7 @@ if [ ! -r "$MYAPPJAR" ]; then
 fi
 
 # Gotta do tricks to handle command line args that contain space chars.
-cmd="$JAVA -jar $MYAPPJAR"
+cmd="$JAVA -cp $EXTRACLASSPATH:$MYAPPJAR $mainclass"
 for x in "$@"; do cmd+=" \"$x\""; done
 
 [ -z "$verbose" ] || echo $cmd
