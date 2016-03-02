@@ -7,6 +7,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.xml.DOMConfigurator;
@@ -31,6 +32,7 @@ public class MyApp implements Runnable {
         OPTIONS = new Options();
         OPTIONS.addOption("h","help",false,"Print this message.");
 	OPTIONS.addOption("v","verbose",false,"Turn on verbose output.");
+        OPTIONS.addOption(null,"debug",false,"set fallback log4j configurationlevel to DEBUG");
         OPTIONS.addOption(null,"l4jconfig",true,"Path to the log4j configuration file [./l4j.lcf]");
         // Add application specific options here.
     }
@@ -42,7 +44,7 @@ public class MyApp implements Runnable {
                 (new HelpFormatter()).printHelp(USAGE,HEADER,OPTIONS,FOOTER,false);
                 System.exit(1);
             }
-            configureLog4j(cmdline.getOptionValue("l4jconfig","l4j.lcf"));
+            configureLog4j(cmdline.getOptionValue("l4jconfig","l4j.lcf"),cmdline.hasOption("debug"));
         
             MyApp application = new MyApp(cmdline.hasOption("verbose"), cmdline.getArgs());
             application.run();
@@ -53,7 +55,7 @@ public class MyApp implements Runnable {
         }
     }
     
-    static void configureLog4j(String l4jconfig) {
+    static void configureLog4j(String l4jconfig,boolean debug) {
         if ((new File(l4jconfig)).canRead()) {
             if (l4jconfig.matches(".*\\.xml$")) {
                 DOMConfigurator.configureAndWatch(l4jconfig);
@@ -62,6 +64,7 @@ public class MyApp implements Runnable {
             }
         } else {
             BasicConfigurator.configure();
+            LOGGER.setLevel(debug?Level.DEBUG:Level.INFO);
         }
     }
 
