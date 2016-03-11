@@ -1,11 +1,11 @@
-This as a template for starting a new Java application.
+This is a template for starting a new Java application.
 
 Customization starts by:
 
-- Edit and rename the "myapp" script. Changing the "myapp=myapp" line is usually all that's needed.
-- Edit "pom.xml"; change project/groupId, project/artifactId, and */manifest/mainClass .
-- Edit "Makefile"; change default values for MYAPP and JARFILE.
 - Under src/main, rename "com/demo/myapp" to your package and MyApp.java to your main class.
+- Edit and rename the "myapp" application wrapper script. Change TRUNK, jarfilebasename, and mainclass.
+- Edit "pom.xml"; change <project><groupId>, <project><artifactId>, <properties><trunk> and ..<manifest><mainClass>.
+- Edit "Makefile"; change default values for MYAPP and JARFILE.nnn
 - Edit the renamed "MyApp.java" and add your application code.
 
 To build the application using maven run "mvn package". 

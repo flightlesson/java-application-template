@@ -1,9 +1,14 @@
 #! /bin/bash
 myname=$(echo $0 | sed 's|.*/||')
 mydir=$(dirname $0 | sed 's|/$||')
-jarfilebasename=myapp # jar file's name matches $jarfilebasename*.jar
-mainclass=com.demo.myapp.MyApp
+
+# TRUNK should have the Same value as TRUNK in the Makefile and trunk in pom.xml.
+# TRUNK must either be empty or end with a slash.
 TRUNK=../
+# The jar file's name matches $jarfilebasename*.jar
+jarfilebasename=myapp
+# The application's main class
+mainclass=com.demo.myapp.MyApp
 
 function usage() {
     cat <<- xxx

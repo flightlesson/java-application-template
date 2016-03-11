@@ -1,7 +1,9 @@
 # This uses GNU Make syntax and extensions.
 
 MYAPP=myapp
-# TRUNK is usually set to the parent of the scm-managed directory. Note that TRUNK must either be empty or end with a slash.
+# TRUNK is usually set to the parent of the scm-managed directory.
+# TRUNK must either be empty or end with a slash.
+# Should have same value as TRUNK in any application wrapper scripts and <trunk> in pom.xml.
 TRUNK=../
 JARFILE=$(TRUNK)maven-build-artifacts/$(MYAPP)/$(MYAPP)-1.0-SNAPSHOT-jar-with-dependencies.jar
 STAGING=$(TRUNK)staging

@@ -7,7 +7,11 @@
     <packaging>jar</packaging>
 
     <properties>
-        <!-- trunk is usually the parent of the scm-controlled directory -->
+        <!-- Trunk is usually the parent of the scm-controlled directory.
+	     Must either be empty or end in a slash.
+	     Should have the same value as TRUNK in the Makefile
+	     and TRUNK in any application helper scripts.
+	  -->
         <trunk>../</trunk>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -29,7 +33,7 @@
 
     <build>
       <!-- place build artifacts under ../maven-build-artifacts; without this they would go in the default "target" subdirectory -->
-      <directory>$(trunk)maven-build-artifacts/${project.artifactId}</directory>
+      <directory>${trunk}maven-build-artifacts/${project.artifactId}</directory>
       <plugins>
         <!-- include dependencies in one jar file -->
 	<plugin>
