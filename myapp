@@ -3,6 +3,7 @@ myname=$(echo $0 | sed 's|.*/||')
 mydir=$(dirname $0 | sed 's|/$||')
 jarfilebasename=myapp # jar file's name matches $jarfilebasename*.jar
 mainclass=com.demo.myapp.MyApp
+TRUNK=../
 
 function usage() {
     cat <<- xxx
@@ -28,8 +29,13 @@ function usage() {
 
 # The jarfile's name and location might be different during development and after installation;
 # this script should work unaltered either way.
-function findJarFile() for c in ./$jarfilebasename*.jar ../maven-build-artifacts/$jarfilebasename/$jarfilebasename-*-with-dependencies.jar \
-                                target/$jarfilebasename-*-with-dependencies.jar $mydir/$jarfilebasename*.jar; do
+# Test a specific jar file by placing it in the current working directory.
+# During development the jar file is under "$(TRUNK)/maven-build-artifacts" (my preference) or "target" (maven's default).
+# After installation the jar file is in the same directory as this script.
+function findJarFile() for c in ./$jarfilebasename*.jar \
+                                ${TRUNK}maven-build-artifacts/$jarfilebasename/$jarfilebasename-*-with-dependencies.jar \
+                                target/$jarfilebasename-*-with-dependencies.jar \
+                                $mydir/$jarfilebasename*.jar; do
                          [ -r $c ] && echo $c && return
                        done
 [ -z "$MYAPPJAR" ] && MYAPPJAR=$(findJarFile || echo "did-not-find-the-jar-file")
