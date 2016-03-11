@@ -1,8 +1,10 @@
 # This uses GNU Make syntax and extensions.
 
 MYAPP=myapp
-JARFILE=../maven-build-artifacts/$(MYAPP)/$(MYAPP)-1.0-SNAPSHOT-jar-with-dependencies.jar
-STAGING=../staging
+# TRUNK is usually set to the parent of the scm-managed directory. Note that TRUNK must either be empty or end with a slash.
+TRUNK=../
+JARFILE=$(TRUNK)maven-build-artifacts/$(MYAPP)/$(MYAPP)-1.0-SNAPSHOT-jar-with-dependencies.jar
+STAGING=$(TRUNK)staging
 
 .PHONY: usage
 usage:

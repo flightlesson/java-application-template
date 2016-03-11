@@ -7,6 +7,8 @@
     <packaging>jar</packaging>
 
     <properties>
+        <!-- trunk is usually the parent of the scm-controlled directory -->
+        <trunk>../</trunk>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -27,7 +29,7 @@
 
     <build>
       <!-- place build artifacts under ../maven-build-artifacts; without this they would go in the default "target" subdirectory -->
-      <directory>../maven-build-artifacts/${project.artifactId}</directory>
+      <directory>$(trunk)maven-build-artifacts/${project.artifactId}</directory>
       <plugins>
         <!-- include dependencies in one jar file -->
 	<plugin>
