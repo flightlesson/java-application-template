@@ -64,8 +64,8 @@ public class MyApp implements Runnable {
             }
         } else {
             BasicConfigurator.configure();
-            LOGGER.setLevel(debug?Level.DEBUG:Level.INFO);
         }
+        if (debug) LOGGER.setLevel(Level.DEBUG);
     }
 
     private final boolean verbose;
