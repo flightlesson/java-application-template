@@ -11,7 +11,8 @@ Customization starts by:
 To build the application using maven run "mvn package". 
 Note that build artifacts get placed in "../maven-build-artifacts/myapp"
 instead of "target", which is maven's default: this is to avoid polluting 
-the project directory with build artifacts. See pom.xml to change this behavior.
+the git-managed project directory with build artifacts. 
+See pom.xml to change this behavior.
 
 To build the application using make, run "make all" or "make install". "make all"
 simply runs 'mvn package'; "make install" creates the ../sandbox directory and
