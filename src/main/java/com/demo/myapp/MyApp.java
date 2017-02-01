@@ -55,8 +55,13 @@ public class MyApp implements Runnable {
         }
     }
     
+    /**
+     * Configures log4j.
+     * @param l4jconfig null or path to the configuration file.
+     * @param debug if true, forces Level.DEBUG.
+     */
     static void configureLog4j(String l4jconfig,boolean debug) {
-        if ((new File(l4jconfig)).canRead()) {
+        if (l4jconfig != null && (new File(l4jconfig)).canRead()) {
             if (l4jconfig.matches(".*\\.xml$")) {
                 DOMConfigurator.configureAndWatch(l4jconfig);
             } else {
