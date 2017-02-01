@@ -32,7 +32,7 @@ public class MyApp implements Runnable {
         OPTIONS = new Options();
         OPTIONS.addOption("h","help",false,"Print this message.");
 	OPTIONS.addOption("v","verbose",false,"Turn on verbose output.");
-        OPTIONS.addOption(null,"debug",false,"set fallback log4j configurationlevel to DEBUG");
+        OPTIONS.addOption(null,"debug",false,"force log4j's level to DEBUG");
         OPTIONS.addOption(null,"l4jconfig",true,"Path to the log4j configuration file [./l4j.lcf]");
         // Add application specific options here.
     }
