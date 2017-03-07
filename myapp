@@ -45,12 +45,12 @@ function findJarFile() for c in ./$jarfilebasename*.jar \
                        done
 [ -z "$MYAPPJAR" ] && MYAPPJAR=$(findJarFile || echo "did-not-find-the-jar-file")
 
-verbose=
+verbosity=0
 noop=
 while [ -n "$1" ]; do
   case "$1" in
     +h) usage ;;
-    +v) verbose=verbose ;;
+    +v) ((++verbosity)) ;;
     +noop) noop=noop; verbose=noop ;;
     +jar) echo $MYAPPJAR; exit 0 ;;
     +main) mainclass=`shift`;;
@@ -68,5 +68,5 @@ fi
 cmd="$JAVA -cp $EXTRACLASSPATH:$MYAPPJAR $mainclass"
 for x in "$@"; do cmd+=" \"$x\""; done
 
-[ -z "$verbose" ] || echo $cmd
+(( verbosity > 0 )) &&  echo $cmd
 [ -z "$noop" ] && eval $cmd
