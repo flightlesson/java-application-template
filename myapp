@@ -12,22 +12,21 @@ mainclass=com.demo.myapp.MyApp
 
 function usage() {
     cat <<- xxx
-	Usage: $myname [+h] [+v] [+noop] <application-args>
+	Usage: $myname [-h] [+v] [+noop] <application-args>
 
 	Runs the ${mainclass} application.
 
-	+h - print this message and stop. To see the application's
-	     help message use '-h'.
+	+h - print this message and exit.
+	-h - print this message and start the application with '-h'.
 	+v - print the java command before invocation.
 	+noop - don't actually invoke the java command.
-        +jar - print the path to the jar file and exit.
+	+jar - print the path to the jar file and exit.
 
 	These environment variables are used to alter behavior:
 	JAVA - identifies the java command
 	MYAPPJAR - identifies the jar file
 	EXTRACLASSPATH - for example: extra1.jar:extra2.jar
 	xxx
-    exit
 }
 
 [ -z "$JAVA" ] &&  JAVA=$(which java)
@@ -49,11 +48,12 @@ verbosity=0
 noop=
 while [ -n "$1" ]; do
   case "$1" in
-    +h) usage ;;
+    +h) usage; exit 0 ;;
+    -h) usage; printf "\n***\n\n"; helpopt="-h" ;;
     +v) ((++verbosity)) ;;
     +noop) noop=noop; verbose=noop ;;
     +jar) echo $MYAPPJAR; exit 0 ;;
-    +main) mainclass=`shift`;;
+    +main) shift; mainclass=$1 ;;
     *)  break ;;
   esac
   shift
@@ -65,7 +65,7 @@ if [ ! -r "$MYAPPJAR" ]; then
 fi
 
 # Gotta do tricks to handle command line args that contain space chars.
-cmd="$JAVA -cp $EXTRACLASSPATH:$MYAPPJAR $mainclass"
+cmd="$JAVA -cp $EXTRACLASSPATH:$MYAPPJAR $mainclass $helpopt"
 for x in "$@"; do cmd+=" \"$x\""; done
 
 (( verbosity > 0 )) &&  echo $cmd
