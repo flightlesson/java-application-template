@@ -4,7 +4,7 @@ Customization starts by:
 
 - Under src/main, rename "com/demo/myapp" to your package and MyApp.java to your main class.
 - Edit and rename the "myapp" application wrapper script. Change TRUNK, jarfilebasename, and mainclass.
-- Edit "pom.xml"; change <project><groupId>, <project><artifactId>, <properties><trunk> and ..<manifest><mainClass>.
+- Edit "pom.xml"; change &lt;project>&lt;groupId>, &lt;project>&lt;artifactId>, &lt;properties>&lt;trunk> and &lt;manifest>&lt;mainClass>.
 - Edit "Makefile"; change default values for MYAPP and JARFILE.nnn
 - Edit the renamed "MyApp.java" and add your application code.
 
